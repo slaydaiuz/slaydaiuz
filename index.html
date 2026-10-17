@@ -354,7 +354,13 @@ function submitForm(){
     /* sendData ishlasa ilova yopiladi. Yopilmasa, noto'g'ri joydan ochilgan */
     setTimeout(() => {
       if (btn) { btn.disabled = false; btn.style.opacity = '1'; }
-      alert(t('wrongOpenAlert'));
+      let info = '';
+      try {
+        info = '\n\n[platform=' + tg.platform + ', v=' + tg.version +
+               ', initData=' + (tg.initData ? tg.initData.length : 0) +
+               ', query=' + (tg.initDataUnsafe && tg.initDataUnsafe.query_id ? 'ha' : 'yoq') + ']';
+      } catch(e) {}
+      alert(t('wrongOpenAlert') + info);
     }, 2500);
   } else {
     alert(t('notTgAlert'));
