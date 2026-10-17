@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Slaydai</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700&family=Manrope:wght@700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -163,12 +164,12 @@ html{min-height:100%;} body{min-height:100vh;}
     <h1 id="formTitle"></h1>
     <div class="sub" data-i18n="formSub"></div>
     <form class="form">
-      <div class="field"><label data-i18n="fFak"></label><input type="text" data-i18n-ph="phFak"></div>
-      <div class="field"><label data-i18n="fYon"></label><input type="text" data-i18n-ph="phYon"></div>
-      <div class="field"><label data-i18n="fFan"></label><input type="text" data-i18n-ph="phFan"></div>
-      <div class="field"><label data-i18n="fMav"></label><input type="text" data-i18n-ph="phMav"></div>
+      <div class="field"><label data-i18n="fFak"></label><input type="text" id="fakInput" data-i18n-ph="phFak"></div>
+      <div class="field"><label data-i18n="fYon"></label><input type="text" id="yonInput" data-i18n-ph="phYon"></div>
+      <div class="field"><label data-i18n="fFan"></label><input type="text" id="fanInput" data-i18n-ph="phFan"></div>
+      <div class="field"><label data-i18n="fMav"></label><input type="text" id="mavInput" data-i18n-ph="phMav"></div>
       <div class="field"><label id="hajmLabel"></label><input type="number" id="hajmInput"></div>
-      <button type="button" class="cta" onclick="alert(t('demoAlert'))" data-i18n="cta"></button>
+      <button type="button" class="cta" onclick="submitForm()" data-i18n="cta"></button>
       <div class="hint" data-i18n="hint"></div>
     </form>
   </div>
@@ -209,7 +210,7 @@ const I18N = {
     docsTitle:"Hujjatlarim", docsSub:"Yaratilgan barcha fayllar shu yerda", empty:"Hali hech narsa yaratmadingiz.<br>Asosiy sahifadan boshlang.",
     setTitle:"Sozlamalar", setSub:"Ilova sozlamalari", rowLang:"Til", rowVer:"Versiya",
     navHome:"Asosiy", navDocs:"Hujjatlarim", navSettings:"Sozlamalar",
-    demoAlert:"Demo: AI hali ulanmagan, keyingi qadamda bog'laymiz.", soonAlert:"Bu xizmat hali ishlab chiqilmoqda, tez kunda qo'shiladi!"
+    fillAlert:"Iltimos, hamma maydonni to'ldiring.", notTgAlert:"Iltimos, ilovani Telegram bot ichidan oching.", soonAlert:"Bu xizmat hali ishlab chiqilmoqda, tez kunda qo'shiladi!"
   },
   ru: {
     hello:"Привет! 👋", sub:"Какой документ нужен сегодня?", stat:"Всего создано:",
@@ -225,7 +226,7 @@ const I18N = {
     docsTitle:"Мои документы", docsSub:"Все созданные файлы здесь", empty:"Вы пока ничего не создали.<br>Начните с главной страницы.",
     setTitle:"Настройки", setSub:"Настройки приложения", rowLang:"Язык", rowVer:"Версия",
     navHome:"Главная", navDocs:"Документы", navSettings:"Настройки",
-    demoAlert:"Демо: ИИ пока не подключён, подключим на следующем шаге.", soonAlert:"Эта услуга ещё разрабатывается и скоро появится!"
+    fillAlert:"Пожалуйста, заполните все поля.", notTgAlert:"Пожалуйста, откройте приложение внутри Telegram-бота.", soonAlert:"Эта услуга ещё разрабатывается и скоро появится!"
   },
   en: {
     hello:"Hello! 👋", sub:"What document do you need today?", stat:"Total created:",
@@ -241,7 +242,7 @@ const I18N = {
     docsTitle:"My documents", docsSub:"All created files are here", empty:"You haven't created anything yet.<br>Start from the home page.",
     setTitle:"Settings", setSub:"App settings", rowLang:"Language", rowVer:"Version",
     navHome:"Home", navDocs:"Documents", navSettings:"Settings",
-    demoAlert:"Demo: AI is not connected yet, we will connect it in the next step.", soonAlert:"This service is still in development and coming soon!"
+    fillAlert:"Please fill in all fields.", notTgAlert:"Please open the app from inside the Telegram bot.", soonAlert:"This service is still in development and coming soon!"
   }
 };
 const LANG_NAMES = {uz:"O'zbekcha", ru:"Русский", en:"English"};
@@ -329,6 +330,29 @@ function goForm(m){
 }
 function goHome(){ showScreen('home'); }
 function comingSoon(){ alert(t('soonAlert')); }
+
+/* Send form to the bot */
+function submitForm(){
+  const data = {
+    mode: mode,
+    lang: lang,
+    faculty: document.getElementById('fakInput').value.trim(),
+    direction: document.getElementById('yonInput').value.trim(),
+    subject: document.getElementById('fanInput').value.trim(),
+    topic: document.getElementById('mavInput').value.trim(),
+    size: parseInt(document.getElementById('hajmInput').value, 10) || 0
+  };
+  if (!data.faculty || !data.direction || !data.subject || !data.topic || !data.size) {
+    alert(t('fillAlert'));
+    return;
+  }
+  const tg = window.Telegram && window.Telegram.WebApp;
+  if (tg && tg.initData) {
+    tg.sendData(JSON.stringify(data));
+  } else {
+    alert(t('notTgAlert'));
+  }
+}
 
 buildLangMenu();
 syncThemeIcon();
