@@ -6,7 +6,7 @@
 <title>Slaydai</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700&family=Manrope:wght@700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root[data-theme="dark"]{
   --bg:#092328; --surface:#0F333A; --surface2:#123b43; --border:#1C454C;
@@ -14,13 +14,15 @@
   --shadow:0 8px 24px rgba(0,0,0,.28);
 }
 :root[data-theme="light"]{
-  --bg:#F4FAF9; --surface:#FFFFFF; --surface2:#EEF6F5; --border:#DCEAE8;
-  --text:#092328; --muted:#5C7A7D; --green:#1FAE63; --green-dim:#1b8a56; --red:#D14942; --green-soft:#E3F7EC; --red-soft:#FBEAE8;
-  --shadow:0 8px 20px rgba(9,35,40,.08);
+  --bg:#E4F3EC; --surface:#FFFFFF; --surface2:#D7EDE3; --border:#B9DCCD;
+  --text:#092328; --muted:#46686B; --green:#12A05A; --green-dim:#0E7F47; --red:#D6453D; --green-soft:#D3F2E1; --red-soft:#FADCD7;
+  --shadow:0 10px 26px rgba(9,60,50,.14);
 }
 *{box-sizing:border-box; margin:0; padding:0;}
+button{color:inherit; font:inherit;}
 html{background:var(--bg); scroll-padding-top:env(safe-area-inset-top,0px);}
 body{background:var(--bg); color:var(--text); font-family:'Inter',sans-serif; padding:env(safe-area-inset-top,0px) 0 env(safe-area-inset-bottom,0px); position:relative; overflow-x:hidden;}
+h1,.brand-name,.hero-title,.cta,.brand-mark{font-family:'Sora','Manrope','Inter',sans-serif;}
 .glow{position:fixed; border-radius:50%; filter:blur(60px); pointer-events:none; z-index:0;}
 .glow1{width:260px; height:260px; background:var(--green); opacity:.16; top:-80px; right:-60px;}
 .glow2{width:220px; height:220px; background:var(--red); opacity:.10; top:300px; left:-80px;}
@@ -28,11 +30,21 @@ body{background:var(--bg); color:var(--text); font-family:'Inter',sans-serif; pa
 
 header{display:flex; align-items:center; justify-content:space-between; margin-bottom:18px;}
 .brand{display:flex; align-items:center; gap:9px;}
-.brand-mark{width:32px; height:32px; border-radius:9px; background:linear-gradient(135deg,var(--green),var(--green-dim)); display:flex; align-items:center; justify-content:center; font-family:'Sora',sans-serif; font-weight:700; color:#06201a; font-size:15px; box-shadow:var(--shadow);}
-.brand-name{font-family:'Sora',sans-serif; font-weight:700; font-size:16px;}
-.theme-toggle{width:38px; height:38px; border-radius:11px; background:var(--surface); border:1px solid var(--border); display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:15px;}
+.brand-mark{width:32px; height:32px; border-radius:9px; background:linear-gradient(135deg,var(--green),var(--green-dim)); display:flex; align-items:center; justify-content:center; font-family:'Sora','Manrope',sans-serif; font-weight:700; color:#06201a; font-size:15px; box-shadow:var(--shadow);}
+.brand-name{font-weight:700; font-size:16px;}
+.hdr-right{display:flex; align-items:center; gap:8px;}
+.theme-toggle{width:38px; height:38px; border-radius:11px; background:var(--surface); border:1px solid var(--border); display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:15px; color:var(--text);}
 
-h1{font-family:'Sora',sans-serif; font-size:22px; margin-bottom:4px;}
+.lang-wrap{position:relative;}
+.lang-btn{height:38px; padding:0 12px; border-radius:11px; background:var(--surface); border:1px solid var(--border); color:var(--text); font-family:'Inter',sans-serif; font-weight:600; font-size:13px; cursor:pointer; display:flex; align-items:center; gap:6px;}
+.lang-menu{position:absolute; right:0; top:46px; min-width:170px; background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:6px; box-shadow:var(--shadow); display:none; z-index:10;}
+.lang-menu.open{display:block;}
+.lang-item{display:flex; align-items:center; justify-content:space-between; width:100%; padding:10px 12px; border:none; background:none; color:var(--text); font-family:'Inter',sans-serif; font-size:13.5px; border-radius:10px; cursor:pointer; text-align:left;}
+.lang-item:hover{background:var(--surface2);}
+.lang-item.active{color:var(--green); font-weight:600;}
+.lang-item .code{font-size:11px; color:var(--muted);}
+
+h1{font-size:22px; margin-bottom:4px;}
 .sub{color:var(--muted); font-size:13.5px; margin-bottom:14px;}
 .stat-pill{display:inline-flex; align-items:center; gap:6px; background:var(--surface); border:1px solid var(--border); border-radius:20px; padding:6px 12px; font-size:12px; color:var(--muted); margin-bottom:18px;}
 .stat-pill b{color:var(--green);}
@@ -40,12 +52,12 @@ h1{font-family:'Sora',sans-serif; font-size:22px; margin-bottom:4px;}
 .hero{background:linear-gradient(135deg,var(--green),var(--green-dim)); border-radius:18px; padding:20px; color:#06201a; margin-bottom:14px; cursor:pointer; box-shadow:var(--shadow); position:relative; overflow:hidden;}
 .hero::after{content:"";position:absolute; width:140px; height:140px; background:rgba(255,255,255,.14); border-radius:50%; top:-50px; right:-40px;}
 .hero-tag{display:inline-block; background:rgba(6,32,26,.18); font-size:11px; font-weight:600; padding:4px 10px; border-radius:20px; margin-bottom:10px; position:relative;}
-.hero-title{font-family:'Sora',sans-serif; font-weight:700; font-size:19px; line-height:1.3; margin-bottom:14px; position:relative;}
+.hero-title{font-weight:700; font-size:19px; line-height:1.3; margin-bottom:14px; position:relative;}
 .hero-cta{display:inline-flex; align-items:center; gap:6px; font-weight:600; font-size:14px; position:relative;}
 
 .services-label{font-size:11.5px; color:var(--muted); letter-spacing:.3px; margin:20px 0 10px;}
 .services{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
-.svc{background:var(--surface); border:1.5px solid var(--border); border-radius:16px; padding:16px 14px; cursor:pointer; text-align:left; box-shadow:var(--shadow); position:relative;}
+.svc{background:var(--surface); border:1.5px solid var(--border); border-radius:16px; padding:16px 14px; cursor:pointer; text-align:left; box-shadow:var(--shadow); position:relative; color:var(--text); font-family:inherit;}
 .svc:active{transform:scale(.98);}
 .svc.soon{opacity:.55; cursor:default;}
 .svc.soon:active{transform:none;}
@@ -63,18 +75,35 @@ h1{font-family:'Sora',sans-serif; font-size:22px; margin-bottom:4px;}
 .field input{width:100%; background:var(--surface); border:1.5px solid var(--border); color:var(--text); border-radius:12px; padding:13px 14px; font-size:14.5px; font-family:'Inter',sans-serif; outline:none;}
 .field input:focus{border-color:var(--green);}
 .field input::placeholder{color:var(--muted);}
-.cta{margin-top:10px; width:100%; padding:16px; border:none; border-radius:14px; background:var(--green); color:#06201a; font-family:'Sora',sans-serif; font-weight:700; font-size:15px; cursor:pointer;}
+.cta{margin-top:10px; width:100%; padding:16px; border:none; border-radius:14px; background:var(--green); color:#06201a; font-weight:700; font-size:15px; cursor:pointer;}
 .hint{text-align:center; color:var(--muted); font-size:12px; margin-top:12px;}
 
 .empty{background:var(--surface); border:1.5px dashed var(--border); border-radius:16px; padding:34px 20px; text-align:center; color:var(--muted); font-size:13.5px;}
 .empty .ic{font-size:28px; margin-bottom:10px;}
-
 .settings-row{display:flex; align-items:center; justify-content:space-between; background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:14px 16px; margin-bottom:10px; font-size:14px;}
 
 nav{position:fixed; bottom:0; left:0; right:0; background:var(--surface); border-top:1px solid var(--border); padding:10px 0 calc(10px + env(safe-area-inset-bottom,0px)); z-index:2;}
 .nav-inner{max-width:460px; margin:0 auto; display:flex; justify-content:space-around;}
 .nav-item{display:flex; flex-direction:column; align-items:center; gap:4px; color:var(--muted); font-size:11px; cursor:pointer; background:none; border:none; font-family:inherit;}
 .nav-item.active{color:var(--green);}
+
+/* ---- Light mode: richer, more playful ---- */
+:root[data-theme="light"]{background:linear-gradient(160deg,#D9F1E6 0%,#F4EEDF 55%,#FADFD7 100%) fixed;}
+:root[data-theme="light"] body{background:transparent;}
+html{min-height:100%;} body{min-height:100vh;}
+:root[data-theme="light"] .glow1{opacity:.38;}
+:root[data-theme="light"] .glow2{opacity:.26;}
+:root[data-theme="light"] .svc[data-mode="ish"],
+:root[data-theme="light"] .svc[data-mode="referat"]{background:linear-gradient(150deg,#FFFFFF 30%,#D3F2E1 100%); border-color:#9ED6B8;}
+:root[data-theme="light"] .svc[data-mode="prez"],
+:root[data-theme="light"] .svc[data-mode="kross"]{background:linear-gradient(150deg,#FFFFFF 30%,#FADCD7 100%); border-color:#EDB1A8;}
+:root[data-theme="light"] .svc-title{color:#092328;}
+:root[data-theme="light"] .svc-desc{color:#46686B;}
+:root[data-theme="light"] .svc.soon{opacity:.7;}
+:root[data-theme="light"] .field input{background:#FFFFFF; border-color:#9ED6B8;}
+:root[data-theme="light"] .stat-pill, :root[data-theme="light"] .settings-row, :root[data-theme="light"] .lang-btn, :root[data-theme="light"] .theme-toggle{border-color:#9ED6B8;}
+:root[data-theme="light"] nav{background:rgba(255,255,255,.88); backdrop-filter:blur(8px); border-top-color:#B9DCCD;}
+:root[data-theme="light"] .empty{background:rgba(255,255,255,.7); border-color:#9ED6B8;}
 </style>
 </head>
 <body>
@@ -82,112 +111,228 @@ nav{position:fixed; bottom:0; left:0; right:0; background:var(--surface); border
 <div class="wrap">
   <header>
     <div class="brand"><div class="brand-mark">S</div><div class="brand-name">Slaydai</div></div>
-    <div class="theme-toggle" id="themeToggle">☾</div>
+    <div class="hdr-right">
+      <div class="lang-wrap">
+        <button class="lang-btn" id="langBtn" type="button">🌐 <span id="langCode">UZ</span> ▾</button>
+        <div class="lang-menu" id="langMenu"></div>
+      </div>
+      <div class="theme-toggle" id="themeToggle">☾</div>
+    </div>
   </header>
 
   <div id="homeScreen">
-    <h1>Salom! 👋</h1>
-    <div class="sub">Bugun qanday hujjat kerak?</div>
-    <div class="stat-pill">📄 Jami yaratilgan: <b>0 ta</b></div>
+    <h1 data-i18n="hello"></h1>
+    <div class="sub" data-i18n="sub"></div>
+    <div class="stat-pill">📄 <span data-i18n="stat"></span> <b>0</b></div>
 
     <div class="hero" onclick="goForm('ish')">
-      <div class="hero-tag">2 DAQIQADA TAYYOR</div>
-      <div class="hero-title">Yangi mustaqil ish<br>yoki taqdimot yaratish</div>
-      <div class="hero-cta">Boshlash →</div>
+      <div class="hero-tag" data-i18n="heroTag"></div>
+      <div class="hero-title" data-i18n="heroTitle"></div>
+      <div class="hero-cta" data-i18n="heroCta"></div>
     </div>
 
-    <div class="services-label">XIZMATLAR</div>
+    <div class="services-label" data-i18n="services"></div>
     <div class="services">
       <button class="svc" data-mode="ish" onclick="goForm('ish')">
         <div class="svc-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/></svg></div>
-        <div class="svc-title">Mustaqil ish</div>
-        <div class="svc-desc">Titul, reja, xulosa bilan</div>
+        <div class="svc-title" data-i18n="ish"></div>
+        <div class="svc-desc" data-i18n="ishDesc"></div>
       </button>
       <button class="svc" data-mode="prez" onclick="goForm('prez')">
         <div class="svc-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="13" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
-        <div class="svc-title">Prezentatsiya</div>
-        <div class="svc-desc">.pptx, slayd-slayd</div>
+        <div class="svc-title" data-i18n="prez"></div>
+        <div class="svc-desc" data-i18n="prezDesc"></div>
       </button>
       <button class="svc soon" data-mode="referat" onclick="comingSoon()">
-        <div class="soon-badge">TEZ KUNDA</div>
+        <div class="soon-badge" data-i18n="soon"></div>
         <div class="svc-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div>
-        <div class="svc-title">Referat</div>
-        <div class="svc-desc">Qisqa, kirish-xulosa bilan</div>
+        <div class="svc-title" data-i18n="referat"></div>
+        <div class="svc-desc" data-i18n="referatDesc"></div>
       </button>
       <button class="svc soon" data-mode="kross" onclick="comingSoon()">
-        <div class="soon-badge">TEZ KUNDA</div>
+        <div class="soon-badge" data-i18n="soon"></div>
         <div class="svc-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></div>
-        <div class="svc-title">Krossvord</div>
-        <div class="svc-desc">Mavzu bo'yicha boshqotirma</div>
+        <div class="svc-title" data-i18n="kross"></div>
+        <div class="svc-desc" data-i18n="krossDesc"></div>
       </button>
     </div>
   </div>
 
   <div id="formScreen">
-    <div class="back" onclick="goHome()">← Orqaga</div>
-    <h1 id="formTitle">Mustaqil ish</h1>
-    <div class="sub">Ma'lumotlarni kiriting</div>
+    <div class="back" onclick="goHome()" data-i18n="back"></div>
+    <h1 id="formTitle"></h1>
+    <div class="sub" data-i18n="formSub"></div>
     <form class="form">
-      <div class="field"><label>Fakultet</label><input type="text" placeholder="Masalan: Iqtisodiyot va menejment"></div>
-      <div class="field"><label>Yo'nalish</label><input type="text" placeholder="Masalan: Iqtisodiyot"></div>
-      <div class="field"><label>Fan</label><input type="text" placeholder="Masalan: Nazariy asoslar"></div>
-      <div class="field"><label>Mavzu</label><input type="text" placeholder="Masalan: Takror ishlab chiqarish"></div>
-      <div class="field" id="hajmField"><label>Hajm (bet soni)</label><input type="number" placeholder="25"></div>
-      <button type="button" class="cta" onclick="alert('Demo: AI hali ulanmagan, keyingi qadamda bog\'laymiz.')">Generatsiya qilish</button>
-      <div class="hint">Jarayon odatda 1–2 daqiqa davom etadi</div>
+      <div class="field"><label data-i18n="fFak"></label><input type="text" data-i18n-ph="phFak"></div>
+      <div class="field"><label data-i18n="fYon"></label><input type="text" data-i18n-ph="phYon"></div>
+      <div class="field"><label data-i18n="fFan"></label><input type="text" data-i18n-ph="phFan"></div>
+      <div class="field"><label data-i18n="fMav"></label><input type="text" data-i18n-ph="phMav"></div>
+      <div class="field"><label id="hajmLabel"></label><input type="number" id="hajmInput"></div>
+      <button type="button" class="cta" onclick="alert(t('demoAlert'))" data-i18n="cta"></button>
+      <div class="hint" data-i18n="hint"></div>
     </form>
   </div>
 
   <div id="docsScreen">
-    <h1>Hujjatlarim</h1>
-    <div class="sub">Yaratilgan barcha fayllar shu yerda</div>
-    <div class="empty"><div class="ic">📂</div>Hali hech narsa yaratmadingiz.<br>Asosiy sahifadan boshlang.</div>
+    <h1 data-i18n="docsTitle"></h1>
+    <div class="sub" data-i18n="docsSub"></div>
+    <div class="empty"><div class="ic">📂</div><span data-i18n="empty"></span></div>
   </div>
 
   <div id="settingsScreen">
-    <h1>Sozlamalar</h1>
-    <div class="sub">Ilova sozlamalari</div>
-    <div class="settings-row">Til <span>O'zbek 🇺🇿</span></div>
-    <div class="settings-row">Mavzu <span>Tizim bo'yicha</span></div>
-    <div class="settings-row">Versiya <span>0.1 (demo)</span></div>
+    <h1 data-i18n="setTitle"></h1>
+    <div class="sub" data-i18n="setSub"></div>
+    <div class="settings-row"><span data-i18n="rowLang"></span><span id="langName"></span></div>
+    <div class="settings-row"><span data-i18n="rowVer"></span><span>0.1 (demo)</span></div>
   </div>
 </div>
 
 <nav><div class="nav-inner">
-  <button class="nav-item active" id="navHome" onclick="showScreen('home')">🏠<span>Asosiy</span></button>
-  <button class="nav-item" id="navDocs" onclick="showScreen('docs')">📄<span>Hujjatlarim</span></button>
-  <button class="nav-item" id="navSettings" onclick="showScreen('settings')">⚙️<span>Sozlamalar</span></button>
+  <button class="nav-item active" id="navHome" onclick="showScreen('home')">🏠<span data-i18n="navHome"></span></button>
+  <button class="nav-item" id="navDocs" onclick="showScreen('docs')">📄<span data-i18n="navDocs"></span></button>
+  <button class="nav-item" id="navSettings" onclick="showScreen('settings')">⚙️<span data-i18n="navSettings"></span></button>
 </div></nav>
 
 <script>
+const I18N = {
+  uz: {
+    hello:"Salom! 👋", sub:"Bugun qanday hujjat kerak?", stat:"Jami yaratilgan:",
+    heroTag:"2 DAQIQADA TAYYOR", heroTitle:"Yangi mustaqil ish<br>yoki taqdimot yaratish", heroCta:"Boshlash →",
+    services:"XIZMATLAR", ish:"Mustaqil ish", ishDesc:"Titul, reja, xulosa bilan",
+    prez:"Prezentatsiya", prezDesc:".pptx, slayd-slayd", referat:"Referat", referatDesc:"Qisqa, kirish-xulosa bilan",
+    kross:"Krossvord", krossDesc:"Mavzu bo'yicha boshqotirma", soon:"TEZ KUNDA",
+    back:"← Orqaga", formSub:"Ma'lumotlarni kiriting",
+    fFak:"Fakultet", fYon:"Yo'nalish", fFan:"Fan", fMav:"Mavzu",
+    phFak:"Masalan: Iqtisodiyot va menejment", phYon:"Masalan: Iqtisodiyot", phFan:"Masalan: Nazariy asoslar", phMav:"Masalan: Takror ishlab chiqarish",
+    hajmPages:"Hajm (bet soni)", hajmSlides:"Hajm (slayd soni)",
+    cta:"Generatsiya qilish", hint:"Jarayon odatda 1–2 daqiqa davom etadi",
+    docsTitle:"Hujjatlarim", docsSub:"Yaratilgan barcha fayllar shu yerda", empty:"Hali hech narsa yaratmadingiz.<br>Asosiy sahifadan boshlang.",
+    setTitle:"Sozlamalar", setSub:"Ilova sozlamalari", rowLang:"Til", rowVer:"Versiya",
+    navHome:"Asosiy", navDocs:"Hujjatlarim", navSettings:"Sozlamalar",
+    demoAlert:"Demo: AI hali ulanmagan, keyingi qadamda bog'laymiz.", soonAlert:"Bu xizmat hali ishlab chiqilmoqda, tez kunda qo'shiladi!"
+  },
+  ru: {
+    hello:"Привет! 👋", sub:"Какой документ нужен сегодня?", stat:"Всего создано:",
+    heroTag:"ГОТОВО ЗА 2 МИНУТЫ", heroTitle:"Создать новую самостоятельную<br>работу или презентацию", heroCta:"Начать →",
+    services:"УСЛУГИ", ish:"Самостоятельная работа", ishDesc:"С титулом, планом и выводом",
+    prez:"Презентация", prezDesc:".pptx, слайд за слайдом", referat:"Реферат", referatDesc:"Краткий, с введением и выводом",
+    kross:"Кроссворд", krossDesc:"Головоломка по теме", soon:"СКОРО",
+    back:"← Назад", formSub:"Введите данные",
+    fFak:"Факультет", fYon:"Направление", fFan:"Предмет", fMav:"Тема",
+    phFak:"Например: Экономика и менеджмент", phYon:"Например: Экономика", phFan:"Например: Теоретические основы", phMav:"Например: Воспроизводство",
+    hajmPages:"Объём (страниц)", hajmSlides:"Объём (слайдов)",
+    cta:"Сгенерировать", hint:"Обычно занимает 1–2 минуты",
+    docsTitle:"Мои документы", docsSub:"Все созданные файлы здесь", empty:"Вы пока ничего не создали.<br>Начните с главной страницы.",
+    setTitle:"Настройки", setSub:"Настройки приложения", rowLang:"Язык", rowVer:"Версия",
+    navHome:"Главная", navDocs:"Документы", navSettings:"Настройки",
+    demoAlert:"Демо: ИИ пока не подключён, подключим на следующем шаге.", soonAlert:"Эта услуга ещё разрабатывается и скоро появится!"
+  },
+  en: {
+    hello:"Hello! 👋", sub:"What document do you need today?", stat:"Total created:",
+    heroTag:"READY IN 2 MINUTES", heroTitle:"Create a new independent<br>study paper or presentation", heroCta:"Start →",
+    services:"SERVICES", ish:"Independent study", ishDesc:"With title page, outline, conclusion",
+    prez:"Presentation", prezDesc:".pptx, slide by slide", referat:"Essay", referatDesc:"Short, with intro and conclusion",
+    kross:"Crossword", krossDesc:"Puzzle based on your topic", soon:"COMING SOON",
+    back:"← Back", formSub:"Enter the details",
+    fFak:"Faculty", fYon:"Major", fFan:"Subject", fMav:"Topic",
+    phFak:"E.g.: Economics and Management", phYon:"E.g.: Economics", phFan:"E.g.: Theoretical Foundations", phMav:"E.g.: Reproduction",
+    hajmPages:"Length (pages)", hajmSlides:"Length (slides)",
+    cta:"Generate", hint:"Usually takes 1–2 minutes",
+    docsTitle:"My documents", docsSub:"All created files are here", empty:"You haven't created anything yet.<br>Start from the home page.",
+    setTitle:"Settings", setSub:"App settings", rowLang:"Language", rowVer:"Version",
+    navHome:"Home", navDocs:"Documents", navSettings:"Settings",
+    demoAlert:"Demo: AI is not connected yet, we will connect it in the next step.", soonAlert:"This service is still in development and coming soon!"
+  }
+};
+const LANG_NAMES = {uz:"O'zbekcha", ru:"Русский", en:"English"};
+const LANG_CODES = {uz:"UZ", ru:"RU", en:"EN"};
+
+let lang = 'uz';
+let mode = 'ish';
+let currentScreen = 'home';
+try { const s = localStorage.getItem('slaydai_lang'); if (s && I18N[s]) lang = s; } catch(e) {}
+
+function t(k){ return I18N[lang][k] || I18N.uz[k] || k; }
+
+function applyLang(){
+  document.documentElement.setAttribute('lang', lang);
+  document.querySelectorAll('[data-i18n]').forEach(el => { el.innerHTML = t(el.dataset.i18n); });
+  document.querySelectorAll('[data-i18n-ph]').forEach(el => { el.placeholder = t(el.dataset.i18nPh); });
+  document.getElementById('langCode').textContent = LANG_CODES[lang];
+  document.getElementById('langName').textContent = LANG_NAMES[lang];
+  document.querySelectorAll('.lang-item').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
+  renderForm();
+}
+
+function setLang(l){
+  lang = l;
+  try { localStorage.setItem('slaydai_lang', l); } catch(e) {}
+  document.getElementById('langMenu').classList.remove('open');
+  applyLang();
+}
+
+function buildLangMenu(){
+  const menu = document.getElementById('langMenu');
+  menu.innerHTML = '';
+  Object.keys(LANG_NAMES).forEach(code => {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'lang-item';
+    b.dataset.lang = code;
+    b.innerHTML = '<span>' + LANG_NAMES[code] + '</span><span class="code">' + LANG_CODES[code] + '</span>';
+    b.onclick = () => setLang(code);
+    menu.appendChild(b);
+  });
+}
+
+document.getElementById('langBtn').onclick = (e) => {
+  e.stopPropagation();
+  document.getElementById('langMenu').classList.toggle('open');
+};
+document.addEventListener('click', (e) => {
+  if (!e.target.closest('.lang-wrap')) document.getElementById('langMenu').classList.remove('open');
+});
+
+/* Theme */
 document.documentElement.setAttribute('data-theme','dark');
+try { const th = localStorage.getItem('slaydai_theme'); if (th === 'light' || th === 'dark') document.documentElement.setAttribute('data-theme', th); } catch(e) {}
+function syncThemeIcon(){
+  document.getElementById('themeToggle').textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? '☾' : '☀';
+}
 document.getElementById('themeToggle').onclick = () => {
-  const cur = document.documentElement.getAttribute('data-theme');
-  const next = cur === 'dark' ? 'light' : 'dark';
+  const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
   document.documentElement.setAttribute('data-theme', next);
-  document.getElementById('themeToggle').textContent = next === 'dark' ? '☾' : '☀';
+  try { localStorage.setItem('slaydai_theme', next); } catch(e) {}
+  syncThemeIcon();
 };
 
+/* Screens */
 const screens = {home:'homeScreen', docs:'docsScreen', settings:'settingsScreen'};
 function showScreen(name){
+  currentScreen = name;
   document.getElementById('formScreen').style.display='none';
   Object.values(screens).forEach(id => document.getElementById(id).style.display='none');
   document.getElementById(screens[name]).style.display='block';
   ['navHome','navDocs','navSettings'].forEach(id => document.getElementById(id).classList.remove('active'));
   document.getElementById('nav'+name.charAt(0).toUpperCase()+name.slice(1)).classList.add('active');
 }
-
-function goForm(mode){
+function renderForm(){
+  document.getElementById('formTitle').textContent = mode === 'ish' ? t('ish') : t('prez');
+  document.getElementById('hajmLabel').textContent = mode === 'prez' ? t('hajmSlides') : t('hajmPages');
+  document.getElementById('hajmInput').placeholder = mode === 'prez' ? '12' : '25';
+}
+function goForm(m){
+  mode = m;
   Object.values(screens).forEach(id => document.getElementById(id).style.display='none');
   document.getElementById('formScreen').style.display='block';
-  document.getElementById('formTitle').textContent = mode==='ish' ? 'Mustaqil ish' : 'Prezentatsiya';
-  const label = document.querySelector('#hajmField label');
-  const input = document.querySelector('#hajmField input');
-  if(mode==='prez'){ label.textContent='Hajm (slayd soni)'; input.placeholder='12'; }
-  else { label.textContent='Hajm (bet soni)'; input.placeholder='25'; }
+  renderForm();
 }
 function goHome(){ showScreen('home'); }
-function comingSoon(){ alert('Bu xizmat hali ishlab chiqilmoqda — tez kunda qo\'shiladi!'); }
+function comingSoon(){ alert(t('soonAlert')); }
+
+buildLangMenu();
+syncThemeIcon();
+applyLang();
 </script>
 </body>
 </html>
