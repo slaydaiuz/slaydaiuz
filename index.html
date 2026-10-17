@@ -347,7 +347,7 @@ function submitForm(){
     return;
   }
   const tg = window.Telegram && window.Telegram.WebApp;
-  if (tg && tg.initData) {
+  if (tg && tg.platform && tg.platform !== 'unknown') {
     tg.sendData(JSON.stringify(data));
   } else {
     alert(t('notTgAlert'));
