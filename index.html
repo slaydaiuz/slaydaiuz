@@ -210,7 +210,7 @@ const I18N = {
     docsTitle:"Hujjatlarim", docsSub:"Yaratilgan barcha fayllar shu yerda", empty:"Hali hech narsa yaratmadingiz.<br>Asosiy sahifadan boshlang.",
     setTitle:"Sozlamalar", setSub:"Ilova sozlamalari", rowLang:"Til", rowVer:"Versiya",
     navHome:"Asosiy", navDocs:"Hujjatlarim", navSettings:"Sozlamalar",
-    fillAlert:"Iltimos, hamma maydonni to'ldiring.", notTgAlert:"Iltimos, ilovani Telegram bot ichidan oching.", soonAlert:"Bu xizmat hali ishlab chiqilmoqda, tez kunda qo'shiladi!"
+    fillAlert:"Iltimos, hamma maydonni to'ldiring.", wrongOpenAlert:"Ma'lumot yuborilmadi. Botda /start yozing va ilovani pastdagi klaviatura tugmasi (📄 Ilovani ochish) orqali oching.", notTgAlert:"Iltimos, ilovani Telegram bot ichidan oching.", soonAlert:"Bu xizmat hali ishlab chiqilmoqda, tez kunda qo'shiladi!"
   },
   ru: {
     hello:"Привет! 👋", sub:"Какой документ нужен сегодня?", stat:"Всего создано:",
@@ -226,7 +226,7 @@ const I18N = {
     docsTitle:"Мои документы", docsSub:"Все созданные файлы здесь", empty:"Вы пока ничего не создали.<br>Начните с главной страницы.",
     setTitle:"Настройки", setSub:"Настройки приложения", rowLang:"Язык", rowVer:"Версия",
     navHome:"Главная", navDocs:"Документы", navSettings:"Настройки",
-    fillAlert:"Пожалуйста, заполните все поля.", notTgAlert:"Пожалуйста, откройте приложение внутри Telegram-бота.", soonAlert:"Эта услуга ещё разрабатывается и скоро появится!"
+    fillAlert:"Пожалуйста, заполните все поля.", wrongOpenAlert:"Данные не отправлены. Напишите боту /start и откройте приложение кнопкой на клавиатуре (📄 Ilovani ochish).", notTgAlert:"Пожалуйста, откройте приложение внутри Telegram-бота.", soonAlert:"Эта услуга ещё разрабатывается и скоро появится!"
   },
   en: {
     hello:"Hello! 👋", sub:"What document do you need today?", stat:"Total created:",
@@ -242,7 +242,7 @@ const I18N = {
     docsTitle:"My documents", docsSub:"All created files are here", empty:"You haven't created anything yet.<br>Start from the home page.",
     setTitle:"Settings", setSub:"App settings", rowLang:"Language", rowVer:"Version",
     navHome:"Home", navDocs:"Documents", navSettings:"Settings",
-    fillAlert:"Please fill in all fields.", notTgAlert:"Please open the app from inside the Telegram bot.", soonAlert:"This service is still in development and coming soon!"
+    fillAlert:"Please fill in all fields.", wrongOpenAlert:"Data was not sent. Send /start to the bot and open the app with the keyboard button (📄 Ilovani ochish).", notTgAlert:"Please open the app from inside the Telegram bot.", soonAlert:"This service is still in development and coming soon!"
   }
 };
 const LANG_NAMES = {uz:"O'zbekcha", ru:"Русский", en:"English"};
@@ -348,7 +348,14 @@ function submitForm(){
   }
   const tg = window.Telegram && window.Telegram.WebApp;
   if (tg && tg.platform && tg.platform !== 'unknown') {
-    tg.sendData(JSON.stringify(data));
+    const btn = document.querySelector('.cta');
+    if (btn) { btn.disabled = true; btn.style.opacity = '0.6'; }
+    try { tg.sendData(JSON.stringify(data)); } catch(e) {}
+    /* sendData ishlasa ilova yopiladi. Yopilmasa, noto'g'ri joydan ochilgan */
+    setTimeout(() => {
+      if (btn) { btn.disabled = false; btn.style.opacity = '1'; }
+      alert(t('wrongOpenAlert'));
+    }, 2500);
   } else {
     alert(t('notTgAlert'));
   }
